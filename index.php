@@ -2,9 +2,9 @@
 
 
 $servername = "localhost"; // replace with your database host
-$username = "u743445510_nextgen"; // replace with your database username
-$password = "Nextgen@2023"; // replace with your database password
-$database = "u743445510_nextgen"; // replace with your database name
+$username = "u117947056_nextgen"; // replace with your database username
+$password = "Nextgen@0111"; // replace with your database password
+$database = "u117947056_nextgen"; // replace with your database name
 
 
 
