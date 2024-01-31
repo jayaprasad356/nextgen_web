@@ -40,6 +40,8 @@ if (isset($_POST['btnAdd'])) {
     $mobile = isset($_POST['mobile']) ? $_POST['mobile'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $location = isset($_POST['location']) ? $_POST['location'] : '';
+    $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null; // Retrieve user_id from form data
+
 
     // Insert data into the database
     $sql_query = "INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES ('$name', '$mobile', '$email', '$location', '$user_id')";
@@ -305,6 +307,7 @@ input[type="number"] {
     <div class="col-lg-6 col-md-6 col-12">
         <h1 style="color:black; font-size: 2.5em;" data-aos="fade-up">APPLY NOW</h1>
         <form method="post" action="index.php" enctype="multipart/form-data" data-aos="fade-up">
+        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
     <input type="text"  class="form-control" id="name" name="name" placeholder="enter your name" required>
     <input type="mail"  class="form-control" id="email" name="email" placeholder="enter your mail" name="email" required>
     <input type="number"  class="form-control" id="mobile" name="mobile" placeholder="enter your Contact Number" name="mobile" required>
