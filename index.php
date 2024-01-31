@@ -20,18 +20,28 @@ $user_id = null;
 
 // Check if refer_code is provided
 if (!empty($refer_code)) {
-    // Query to fetch user_id based on refer_code
-    $query = "SELECT id FROM users WHERE refer_code = '$refer_code'";
+    // Prepare and bind the SQL statement
+    $stmt = $conn->prepare("SELECT id FROM users WHERE refer_code = ?");
+    $stmt->bind_param("s", $refer_code);
 
     // Execute the query
-    $result = $conn->query($query);
+    $stmt->execute();
 
-    // Check if query executed successfully and a row is found
-    if ($result && $result->num_rows > 0) {
+    // Store the result
+    $stmt->store_result();
+
+    // Check if any row is found
+    if ($stmt->num_rows > 0) {
+        // Bind the result variables
+        $stmt->bind_result($id);
+
         // Fetch user_id from the result
-        $row = $result->fetch_assoc();
-        $user_id = $row['id'];
+        $stmt->fetch();
+        $user_id = $id;
     }
+
+    // Close statement
+    $stmt->close();
 }
 
 if (isset($_POST['btnAdd'])) {
@@ -41,18 +51,26 @@ if (isset($_POST['btnAdd'])) {
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $location = isset($_POST['location']) ? $_POST['location'] : '';
 
-    // Insert data into the database
-    $sql_query = "INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES ('$name', '$mobile', '$email', '$location', '$user_id')";
-    
-    if ($conn->query($sql_query) === TRUE) {
+    // Prepare and bind the SQL statement
+    $stmt = $conn->prepare("INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssi", $name, $mobile, $email, $location, $user_id);
+
+    // Execute the query
+    if ($stmt->execute()) {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
         header("Location: https://nextgencareer.abcdapp.in/");
         exit();
     } else {
-        echo "Error: " . $sql_query . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
+
+    // Close statement
+    $stmt->close();
 }
+
+// Close connection
+$conn->close();
 ?>
 
 <!-- Rest of your HTML code -->
