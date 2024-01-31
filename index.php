@@ -380,17 +380,20 @@ function togglePanel(panelHeader) {
 
 </script>
 <script>
-function addReferCode() {
-    var referCode = "<?php echo $refer_code; ?>";
-    var form = document.querySelector("form");
-    if (referCode && form) {
-        // Append refer_code to the URL when the form is submitted
-        form.addEventListener('submit', function(event) {
+    // Function to modify form action URL to include refer_code
+    function addReferCode() {
+        var referCode = "<?php echo $refer_code; ?>";
+        var form = document.querySelector("form");
+        if (referCode && form) {
+            // Get the form action URL
             var action = form.getAttribute("action");
+            // Append refer_code to the URL
             form.setAttribute("action", action + "?refer_code=" + referCode);
-        });
+        }
     }
-}
+
+    // Call the function when the page loads
+    window.addEventListener('DOMContentLoaded', addReferCode);
 </script>
 
 
