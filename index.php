@@ -20,28 +20,18 @@ $user_id = null;
 
 // Check if refer_code is provided
 if (!empty($refer_code)) {
-    // Prepare and bind the SQL statement
-    $stmt = $conn->prepare("SELECT id FROM users WHERE refer_code = ?");
-    $stmt->bind_param("s", $refer_code);
+    // Query to fetch user_id based on refer_code
+    $query = "SELECT id FROM users WHERE refer_code = '$refer_code'";
 
     // Execute the query
-    $stmt->execute();
+    $result = $conn->query($query);
 
-    // Store the result
-    $stmt->store_result();
-
-    // Check if any row is found
-    if ($stmt->num_rows > 0) {
-        // Bind the result variables
-        $stmt->bind_result($id);
-
+    // Check if query executed successfully and a row is found
+    if ($result && $result->num_rows > 0) {
         // Fetch user_id from the result
-        $stmt->fetch();
-        $user_id = $id;
+        $row = $result->fetch_assoc();
+        $user_id = $row['id'];
     }
-
-    // Close statement
-    $stmt->close();
 }
 
 if (isset($_POST['btnAdd'])) {
@@ -51,26 +41,19 @@ if (isset($_POST['btnAdd'])) {
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $location = isset($_POST['location']) ? $_POST['location'] : '';
 
-    // Prepare and bind the SQL statement
-    $stmt = $conn->prepare("INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssi", $name, $mobile, $email, $location, $user_id);
-
-    // Execute the query
-    if ($stmt->execute()) {
+    // Insert data into the database
+    $sql_query = "INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES ('$name', '$mobile', '$email', '$location', '$user_id')";
+    
+    if ($conn->query($sql_query) === TRUE) {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
-        header("Location: https://nextgencareer.abcdapp.in/");
+        // Redirect to another page after displaying the alert
+        echo "<script>window.location.href='index.php';</script>";
         exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $sql_query . "<br>" . $conn->error;
     }
-
-    // Close statement
-    $stmt->close();
 }
-
-// Close connection
-$conn->close();
 ?>
 
 <!-- Rest of your HTML code -->
@@ -322,7 +305,6 @@ input[type="number"] {
     <div class="col-lg-6 col-md-6 col-12">
         <h1 style="color:black; font-size: 2.5em;" data-aos="fade-up">APPLY NOW</h1>
         <form method="post" action="index.php" enctype="multipart/form-data" data-aos="fade-up">
-    
     <input type="text"  class="form-control" id="name" name="name" placeholder="enter your name" required>
     <input type="mail"  class="form-control" id="email" name="email" placeholder="enter your mail" name="email" required>
     <input type="number"  class="form-control" id="mobile" name="mobile" placeholder="enter your Contact Number" name="mobile" required>
@@ -393,14 +375,14 @@ function togglePanel(panelHeader) {
 
 </script>
 <script>
-    function addReferCode() {
-        var referCode = "<?php echo $refer_code; ?>";
-        if (referCode) {
-            var link = "https://nextgencareer.abcdapp.in?";
-            var fullLink = link + "refer_code=" + referCode;
-            window.location.href = fullLink;
-        }
+function addReferCode() {
+    var referCode = "<?php echo $refer_code; ?>";
+    var form = document.querySelector("form");
+    if (referCode && form) {
+        var action = form.getAttribute("action");
+        form.setAttribute("action", action + "?refer_code=" + referCode);
     }
+}
 </script>
 
     <!-- Bootstrap JS and Popper.js -->
