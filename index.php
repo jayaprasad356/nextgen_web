@@ -48,7 +48,7 @@ if (isset($_POST['btnAdd'])) {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
         // Redirect to another page after displaying the alert
-        echo "<script>window.location.href='index.php';</script>";
+        echo "<script>window.location.href='#';</script>";
         exit();
     } else {
         echo "Error: " . $sql_query . "<br>" . $conn->error;
