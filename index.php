@@ -31,9 +31,12 @@ if (!empty($refer_code)) {
         // Fetch user_id from the result
         $row = $result->fetch_assoc();
         $user_id = $row['id'];
+        
+        // After user_id is obtained, redirect to the root URL
+        header("Location: https://nextgencareer.abcdapp.in/");
+        exit();
     }
 }
-
 if (isset($_POST['btnAdd'])) {
     // Retrieve form data
     $name = isset($_POST['name']) ? $_POST['name'] : '';
