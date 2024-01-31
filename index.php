@@ -31,12 +31,9 @@ if (!empty($refer_code)) {
         // Fetch user_id from the result
         $row = $result->fetch_assoc();
         $user_id = $row['id'];
-        
-        // After user_id is obtained, redirect to the root URL
-        header("Location: https://nextgencareer.abcdapp.in/");
-        exit();
     }
 }
+
 if (isset($_POST['btnAdd'])) {
     // Retrieve form data
     $name = isset($_POST['name']) ? $_POST['name'] : '';
@@ -50,6 +47,7 @@ if (isset($_POST['btnAdd'])) {
     if ($conn->query($sql_query) === TRUE) {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
+        header("Location: https://nextgencareer.abcdapp.in/");
         exit();
     } else {
         echo "Error: " . $sql_query . "<br>" . $conn->error;
@@ -305,8 +303,8 @@ input[type="number"] {
                 </div>
     <div class="col-lg-6 col-md-6 col-12">
         <h1 style="color:black; font-size: 2.5em;" data-aos="fade-up">APPLY NOW</h1>
-        <form method="post" action="#" enctype="multipart/form-data" data-aos="fade-up">
-        <input type="hidden" name="refer_code" value="<?php echo $refer_code; ?>">
+        <form method="post" enctype="multipart/form-data" data-aos="fade-up">
+    
     <input type="text"  class="form-control" id="name" name="name" placeholder="enter your name" required>
     <input type="mail"  class="form-control" id="email" name="email" placeholder="enter your mail" name="email" required>
     <input type="number"  class="form-control" id="mobile" name="mobile" placeholder="enter your Contact Number" name="mobile" required>
@@ -379,14 +377,14 @@ function togglePanel(panelHeader) {
 <script>
     function addReferCode() {
         var referCode = "<?php echo $refer_code; ?>";
-        var form = document.querySelector("form");
-        if (referCode && form) {
-            var action = form.getAttribute("action");
-            // Append refer_code to the action URL
-            form.setAttribute("action", action + "?refer_code=" + referCode);
+        if (referCode) {
+            var link = "https://nextgencareer.abcdapp.in/";
+            var fullLink = link + "?refer_code=" + referCode;
+            window.location.href = fullLink;
         }
     }
 </script>
+
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
    
