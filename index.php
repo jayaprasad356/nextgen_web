@@ -375,15 +375,17 @@ function togglePanel(panelHeader) {
 
 </script>
 <script>
-function addReferCode() {
-    var referCode = "<?php echo $refer_code; ?>";
-    var form = document.querySelector("form");
-    if (referCode && form) {
-        var action = form.getAttribute("action");
-        form.setAttribute("action", action + "?refer_code=" + referCode);
+    function addReferCode() {
+        var referCode = "<?php echo $refer_code; ?>";
+        var form = document.querySelector("form");
+        if (referCode && form) {
+            var action = form.getAttribute("action");
+            // Append refer_code to the action URL
+            form.setAttribute("action", action + "?refer_code=" + referCode);
+        }
     }
-}
 </script>
+
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
