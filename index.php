@@ -1,5 +1,8 @@
 <?php
 
+// Start session
+session_start();
+
 $servername = "localhost"; // replace with your database host
 $username = "u117947056_nextgen"; // replace with your database username
 $password = "Nextgen@0111"; // replace with your database password
@@ -13,6 +16,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Initialize refer_code variable
 $refer_code = isset($_GET['refer_code']) ? $_GET['refer_code'] : '';
 
 // Initialize user_id variable
@@ -34,12 +38,19 @@ if (!empty($refer_code)) {
     }
 }
 
+// Check if the form is submitted
 if (isset($_POST['btnAdd'])) {
     // Retrieve form data
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $mobile = isset($_POST['mobile']) ? $_POST['mobile'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $location = isset($_POST['location']) ? $_POST['location'] : '';
+
+    // Check if user_id is set in the session
+    if (isset($_SESSION['user_id'])) {
+        // Use the user_id from the session
+        $user_id = $_SESSION['user_id'];
+    }
 
     // Insert data into the database
     $sql_query = "INSERT INTO website_enroll (name, mobile, email, location, user_id) VALUES ('$name', '$mobile', '$email', '$location', '$user_id')";
