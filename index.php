@@ -1,8 +1,9 @@
 <?php
+
 $servername = "localhost"; // replace with your database host
-$username = "u743445510_nextgen"; // replace with your database username
-$password = "Nextgen@2023"; // replace with your database password
-$database = "u743445510_nextgen"; // replace with your database name
+$username = "root"; // replace with your database username
+$password = ""; // replace with your database password
+$database = "next_gen"; // replace with your database name
 
 
 // Create connection
