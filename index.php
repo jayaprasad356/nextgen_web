@@ -391,10 +391,16 @@ function addReferCode() {
     var form = document.querySelector("form");
     if (referCode && form) {
         var action = form.getAttribute("action");
-        form.setAttribute("action", action + "?refer_code=" + referCode);
+        // Check if the action already has query parameters
+        if (action.indexOf('?') !== -1) {
+            form.setAttribute("action", action + "&refer_code=" + referCode);
+        } else {
+            form.setAttribute("action", action + "?refer_code=" + referCode);
+        }
     }
 }
 </script>
+
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
