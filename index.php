@@ -5,6 +5,7 @@ $username = "u117947056_nextgen"; // replace with your database username
 $password = "Nextgen@0111"; // replace with your database password
 $database = "u117947056_nextgen"; // replace with your database name
 
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -34,7 +35,7 @@ if (!empty($refer_code)) {
     }
 }
 
-if (isset($_POST['btnAdd'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $mobile = isset($_POST['mobile']) ? $_POST['mobile'] : '';
@@ -47,12 +48,17 @@ if (isset($_POST['btnAdd'])) {
     if ($conn->query($sql_query) === TRUE) {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
-       
+
+        header("Location: index.php"); // Replace 'success.php' with your actual success page
         exit();
+
+
     } else {
         echo "Error: " . $sql_query . "<br>" . $conn->error;
     }
 }
+
+$conn->close();
 ?>
 
 <!-- Rest of your HTML code -->
