@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Display JavaScript alert
         echo "<script>alert('New record created successfully');</script>";
 
-        header("Location: index.php"); // Replace 'success.php' with your actual success page
+        echo "<script>window.location.href='index.php';</script>";
         exit();
 
 
@@ -309,7 +309,7 @@ input[type="number"] {
                 </div>
     <div class="col-lg-6 col-md-6 col-12">
         <h1 style="color:black; font-size: 2.5em;" data-aos="fade-up">APPLY NOW</h1>
-        <form method="post" action="index.php" enctype="multipart/form-data" data-aos="fade-up">
+        <form method="post" action="#" enctype="multipart/form-data" data-aos="fade-up">
     <input type="text"  class="form-control" id="name" name="name" placeholder="enter your name" required>
     <input type="mail"  class="form-control" id="email" name="email" placeholder="enter your mail" name="email" required>
     <input type="number"  class="form-control" id="mobile" name="mobile" placeholder="enter your Contact Number" name="mobile" required>
